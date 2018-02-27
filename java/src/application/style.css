@@ -1,0 +1,17 @@
+graph {
+    fill-color: #1E232B;
+}
+
+node {
+    fill-color: #7796f2;
+    /*shadow-color: white, #9ad6ee;*/
+    /*shadow-mode: gradient-radial;*/
+    /*shadow-offset: 0px;*/
+    text-alignment: under;
+    text-offset: 0px, 4px;
+    text-color: white;
+}
+
+edge {
+    fill-color: white;
+}

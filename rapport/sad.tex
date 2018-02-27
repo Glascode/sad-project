@@ -1,0 +1,81 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[a4paper, 11pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx} % Required for includegraphics
+
+\usepackage{hyperref} % Useful to make links clickable amongst others
+
+\usepackage{float} % Put figures where you actually want [H]
+
+% Title page elements declarations
+% ================================================================
+
+% New elements
+% ----------------------
+\makeatletter
+\def\@university{}
+\newcommand{\university}[1]{\def\@university{#1}}
+%
+\def\@department{}
+\newcommand{\department}[1]{\def\@department{#1}}
+%
+\def\@subject{}
+\newcommand{\subject}[1]{\def\@subject{#1}}
+\makeatother
+
+% ----- Title page customisation -----
+\makeatletter
+\newcommand{\mytitle}{
+  \begin{titlepage} % Create the command to include the title page in the document
+  \hbox{
+    \parbox[b]{.4\textwidth}{ % Paragraph box which restricts text to less than the width of the page
+      {\noindent\itshape\@university\\ % University
+      \@department} % Department
+      \vskip.94\textheight % Skip from the bottom of the page to the text (\parbox[b])
+    }
+    %\hspace*{.2\textwidth} % Space to the left of the title page
+    \rule{1pt}{\textheight} % Vertical line
+    \hspace*{0.05\textwidth} % Space between the vertical line and title page text
+    \parbox[b]{0.75\textwidth}{
+      {\noindent\Huge\bfseries\@title} % Title
+      \vskip 5em%
+      {\large{\@subject}} % Subject
+      \vskip 9em%
+      \@author % Author(s) name(s)
+      \vskip 0.4\textheight % Skip between the title block and the publisher
+      {\noindent\@date}\\[\baselineskip] % Date
+    }
+  }
+  \end{titlepage}
+}
+\makeatother
+% ============================================================
+% end of title page declarations
+
+\usepackage[french]{babel} % language package
+
+\title{Jeu d'infection}
+\date{\today}
+\author{Maël Querré\\
+        Christina Williamson}
+\university{Université de Caen}
+\department{Département d'informatique}
+\subject{Sécurité et Aide à la Décision}
+
+\begin{document}
+
+\mytitle
+
+\tableofcontents
+
+\part{Fonctionnement}
+
+\chapter{}
+
+\ection{}
+
+\part{Interface}
+
+\end{document}

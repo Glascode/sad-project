@@ -1,0 +1,9 @@
+# Compilation files
+bin/
+*.class
+
+# OS generated files
+.DS_Store
+
+# IDE files
+.idea

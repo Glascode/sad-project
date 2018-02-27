@@ -1,0 +1,4 @@
+\select@language {french}
+\contentsline {part}{I\hspace {1em}Fonctionnement}{2}{part.1}
+\contentsline {part}{II\hspace {1em}Interface}{3}{part.2}
+\contentsline {section}{\numberline {0.1}Oui}{4}{section.0.1}
