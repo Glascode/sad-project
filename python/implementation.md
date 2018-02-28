@@ -3,7 +3,7 @@
 
 | class State                |
 |----------------------------|
-| - graph                    |
+| - graph (network)          |
 | - infected machines        |
 | - current player           |
 | -------------------------- |
@@ -31,10 +31,10 @@ Running the game
 ```Python
 s = State()
 while not s.is_finished():
-    c = minmax(s, d_defense())
+    coup = minmax(s, d_defense())
     s = s.play_defense()
-    c = minmax(s, d_attack())
-    s = s.play_attack(c)
+    coup = minmax(s, d_attack())
+    s = s.play_attack(coup)
 ```
 
 `Minmax` implementation

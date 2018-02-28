@@ -3,15 +3,25 @@ graph {
 }
 
 node {
-    fill-color: #7796f2;
+    fill-color: #6eaba6, white;
+    fill-mode: dyn-plain;
     /*shadow-color: white, #9ad6ee;*/
     /*shadow-mode: gradient-radial;*/
     /*shadow-offset: 0px;*/
     text-alignment: under;
     text-offset: 0px, 4px;
     text-color: white;
+    text-size: 20;
+}
+
+node.infected {
+    fill-color: #9d0000;
 }
 
 edge {
-    fill-color: white;
+    fill-color: #52807c;
+}
+
+edge.infected {
+    fill-color: #740000;
 }

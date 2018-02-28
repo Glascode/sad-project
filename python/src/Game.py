@@ -29,7 +29,10 @@ class State:
         return infectable_machines
 
     def get_defense(self):
-        """Return the edges linked to an infected machine."""
+        """Return the list of edges linked to an infected machine.
+
+        :return: The list of edges linked to an infected machine
+        """
         infected_edges = []
         for machine in self.network:
             if machine not in self.infected:
@@ -67,12 +70,10 @@ def infect_initial_machine(network):
 
 if __name__ == "__main__":
     # network = generate_graph(10, 4)
-    network = {1: [2, 5], 2: [1, 5, 4, 7], 3: [4, 6], 4: [5, 2, 3], 5: [4, 2,
-                                                                        1], 6: [
-        8, 7, 3], 7: [2, 6, 8], 8: [7, 6]}
-    print(network)
+    network = {1: [2, 5], 2: [3, 5], 3: [4, 2], 4: [5, 3], 5: [4, 2], 6: [4]}
+    print("Network:", network)
     s = State(network, 1, infect_initial_machine(network))
     # for machine in network:
     #     print("Machine: " + str(machine) + ", edges: " + str(network[machine]))
-    print(s.get_value())
-    print(s.get_defense())
+    print("s.get_value():", s.get_value())
+    print("s.get_defense():", s.get_defense())

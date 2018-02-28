@@ -1,12 +1,18 @@
 % !TEX encoding = UTF-8 Unicode
 \documentclass[a4paper, 11pt]{report}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage{ifxetex}
+
+\ifxetex
+  \usepackage{fontspec}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern} % Improve font
+\fi
+
 \usepackage{graphicx} % Required for includegraphics
-
 \usepackage{hyperref} % Useful to make links clickable amongst others
-
 \usepackage{float} % Put figures where you actually want [H]
 
 % Title page elements declarations
@@ -70,12 +76,13 @@
 
 \tableofcontents
 
-\part{Fonctionnement}
+\chapter{Représentation du graphe}
 
-\chapter{}
+\section{Données du graphe}
 
-\ection{}
+\section{Représentation graphique}
 
-\part{Interface}
+
+\chapter{Fonctionnement du jeu}
 
 \end{document}
