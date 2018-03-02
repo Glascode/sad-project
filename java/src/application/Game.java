@@ -25,15 +25,15 @@ public class Game {
 
     public void run() {
         State state = new State();
-        System.out.println(state.getAttacks());
+        System.out.println("Infectable machines: " + state.getAttacks());
         sleep();
-        state.playAttack("5");
+        state.playAttack(5);
         sleep();
-        state.playDefense("1-2");
+        state.playDefense(new Edge(new Node(1), new Node(2)));
         sleep();
-        state.playDefense("2-5");
+        state.playDefense(new Edge(new Node(2), new Node(5)));
         sleep();
-        state.playDefense("4-5");
+        state.playDefense(new Edge(new Node(4), new Node(5)));
     }
 
 }

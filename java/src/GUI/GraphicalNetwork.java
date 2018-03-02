@@ -27,6 +27,7 @@ public class GraphicalNetwork {
             String node1Name = edge.getNode1().getName();
             String node2Name = edge.getNode2().getName();
             graph.addEdge(edge.getName(), node1Name, node2Name);
+            graph.getEdge(edge.getName()).addAttribute("ui.class", edge.getType());
         }
 
         /* Style renderer */
@@ -37,8 +38,11 @@ public class GraphicalNetwork {
     }
 
     public void updateGraph() {
-        for (org.graphstream.graph.Edge e : graph.getEachEdge()) {
-
+        for (Node node : network.getNodeSet()) {
+            graph.getNode(node.getName()).addAttribute("ui.class", node.getType());
+        }
+        for (Edge edge : network.getEdgeSet()) {
+            graph.getEdge(edge.getName()).addAttribute("ui.class", edge.getType());
         }
     }
 

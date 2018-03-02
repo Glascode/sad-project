@@ -30,6 +30,8 @@ public class State {
 
         /* Infect the machine (1) */
         network.getNode(1).infect();
+
+        network.printNetwork();
     }
 
     /**
@@ -54,29 +56,22 @@ public class State {
      *
      * @return The set of infectable machines
      */
-    public TreeSet<Node> getAttacks() {
-        TreeSet<Node> infectableMachines = new TreeSet<>();
+    public TreeSet<Integer> getAttacks() {
+        TreeSet<Integer> infectableMachines = new TreeSet<>();
         for (Node machine : network.getNodeSet()) {
             if (machine.isInfected()) {
                 for (Node neighbour : network.getNeighbourNodes(machine)) {
                     if (!neighbour.isInfected()) {
-                        infectableMachines.add(machine);
+                        infectableMachines.add(neighbour.getId());
                     }
                 }
-//                Iterator<Node> machineItr = machine.getNeighborNodeIterator();
-//                while (machineItr.hasNext()) {
-//                    Node nextMachine = machineItr.next();
-//                    if (nextMachine.getAttribute("ui.class") != "infected") {
-//                        infectableMachines.add(nextMachine);
-//                    }
-//                }
             }
         }
         return infectableMachines;
     }
 
-    public void playAttack(int move) {
-        network.getNode(move).infect();
+    public void playAttack(int machine) {
+        network.getNode(machine).infect();
     }
 
     public static HashSet<String> getPowerset(int a[], int n, HashSet<String> ps) {
@@ -101,19 +96,18 @@ public class State {
         return ps;
     }
 
-    public HashSet<Edge> getDefenses() {
-        HashSet<Edge> infectableEdges = new HashSet<>();
-        for (Edge edge : graph.getEachEdge()) {
-            if (edge.getNode0().getAttribute("ui.class") == "infected"
-                    && edge.getNode1().getAttribute("ui.class") == "infected") {
-                edge.setAttribute("ui.class", "infected");
+    public TreeSet<Edge> getDefenses() {
+        TreeSet<Edge> infectableEdges = new TreeSet<>();
+        for (Edge edge : network.getEdgeSet()) {
+            if (edge.isInfectable()) {
+                infectableEdges.add(edge);
             }
         }
         return infectableEdges;
     }
 
-    public void playDefense(String move) {
-        graph.removeEdge(move);
+    public void playDefense(Edge edge) {
+        network.removeEdge(edge);
     }
 
     public boolean isFinished() {
