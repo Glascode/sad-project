@@ -25,6 +25,7 @@ public class Game {
 
     public void run() {
         State state = new State();
+        System.out.println(state.getAttacks());
         sleep();
         state.playAttack("5");
         sleep();

@@ -1,12 +1,6 @@
 package application;
 
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.SingleGraph;
-
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.TreeSet;
 
 public class State {
@@ -14,37 +8,28 @@ public class State {
     private int numberOfMachines;
     private int numberOfInfectedMachines;
     private String player;
-    private Graph graph = new SingleGraph("Network");
+    private Network network;
 
     public State() {
+        network = new Network();
 
-        TreeSet<String> network = new TreeSet<>();
+        network.addNode(1);
+        network.addNode(2);
+        network.addNode(3);
+        network.addNode(4);
+        network.addNode(5);
+        network.addNode(6);
 
-        graph.addNode("1").setAttribute("ui.label", "1");
-        graph.addNode("2").setAttribute("ui.label", "2");
-        graph.addNode("3").setAttribute("ui.label", "3");
-        graph.addNode("4").setAttribute("ui.label", "4");
-        graph.addNode("5").setAttribute("ui.label", "5");
-        graph.addNode("6").setAttribute("ui.label", "6");
+        network.addEdge(1, 2);
+        network.addEdge(1, 5);
+        network.addEdge(2, 3);
+        network.addEdge(2, 5);
+        network.addEdge(3, 4);
+        network.addEdge(4, 5);
+        network.addEdge(4, 6);
 
-        graph.addEdge("1-2", "1", "2");
-        graph.addEdge("1-5", "1", "5");
-        graph.addEdge("2-3", "2", "3");
-        graph.addEdge("2-5", "2", "5");
-        graph.addEdge("3-4", "3", "4");
-        graph.addEdge("4-6", "4", "6");
-        graph.addEdge("4-5", "4", "5");
-
-        /* Infect the first (1) machine */
-        graph.getNode("1").addAttribute("ui.class", "infected");
-
-        /* Style renderer */
-        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-
-        /* Style sheet */
-        graph.addAttribute("ui.stylesheet", "url('src/application/style.css')");
-
-        graph.display();
+        /* Infect the machine (1) */
+        network.getNode(1).infect();
     }
 
     /**
@@ -54,11 +39,10 @@ public class State {
      */
     public int getValue() {
         int numberOfSafeEdges = 0;
-        for (Edge edge : graph.getEachEdge()) {
+        for (Edge edge : network.getEdgeSet()) {
 
             /* If both nodes of the edge are not infected */
-            if (edge.getNode0().getAttribute("ui.class") != "infected"
-                    && edge.getNode1().getAttribute("ui.class") != "infected") {
+            if (edge.getType().equals("healthy")) {
                 numberOfSafeEdges++;
             }
         }
@@ -70,30 +54,29 @@ public class State {
      *
      * @return The set of infectable machines
      */
-    public HashSet<Node> getAttacks() {
-        HashSet<Node> infectableMachines = new HashSet<>();
-        for (Node machine : graph) {
-            if (machine.getAttribute("ui.class") == "infected") {
-                Iterator<Node> machineItr = machine.getNeighborNodeIterator();
-                while (machineItr.hasNext()) {
-                    Node nextMachine = machineItr.next();
-                    if (nextMachine.getAttribute("ui.class") != "infected") {
-                        infectableMachines.add(nextMachine);
+    public TreeSet<Node> getAttacks() {
+        TreeSet<Node> infectableMachines = new TreeSet<>();
+        for (Node machine : network.getNodeSet()) {
+            if (machine.isInfected()) {
+                for (Node neighbour : network.getNeighbourNodes(machine)) {
+                    if (!neighbour.isInfected()) {
+                        infectableMachines.add(machine);
                     }
                 }
+//                Iterator<Node> machineItr = machine.getNeighborNodeIterator();
+//                while (machineItr.hasNext()) {
+//                    Node nextMachine = machineItr.next();
+//                    if (nextMachine.getAttribute("ui.class") != "infected") {
+//                        infectableMachines.add(nextMachine);
+//                    }
+//                }
             }
         }
         return infectableMachines;
     }
 
-    public void playAttack(String move) {
-        graph.getNode(move).addAttribute("ui.class", "infected");
-        for (Edge edge : graph.getEachEdge()) {
-            if (edge.getNode0().getAttribute("ui.class") == "infected"
-                    && edge.getNode1().getAttribute("ui.class") == "infected") {
-                edge.setAttribute("ui.class", "infected");
-            }
-        }
+    public void playAttack(int move) {
+        network.getNode(move).infect();
     }
 
     public static HashSet<String> getPowerset(int a[], int n, HashSet<String> ps) {

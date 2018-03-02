@@ -1,12 +1,6 @@
 package application;
 
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Node;
-
-import java.util.ArrayList;
-
 public class MinMax {
-
 
     public double minMax(State state, int depth) {
         //ArrayList result = new ArrayList();
