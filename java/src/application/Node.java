@@ -40,7 +40,7 @@ public class Node implements Comparable {
      * @return The name of this node
      */
     public String getName() {
-        return Integer.toString(id);
+        return String.valueOf(id);
     }
 
     /**
@@ -66,6 +66,15 @@ public class Node implements Comparable {
      */
     public boolean isInfected() {
         return type.equals("infected");
+    }
+
+    /**
+     * Returns the representation of the node with its type.
+     *
+     * @return The the representation of the node with its type
+     */
+    public String getRepresentation() {
+        return "[" + getType().toUpperCase() + "] " + getName();
     }
 
     /**
@@ -131,6 +140,6 @@ public class Node implements Comparable {
      */
     @Override
     public String toString() {
-        return "[" + type.toUpperCase() + "] " + id;
+        return getName();
     }
 }

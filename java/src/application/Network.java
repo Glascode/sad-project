@@ -59,7 +59,7 @@ public class Network {
     public String formatNetwork() {
         StringBuilder formattedNetwork = new StringBuilder();
         for (Node node : nodeSet) {
-            formattedNetwork.append(node + " => ");
+            formattedNetwork.append(node.getRepresentation() + " => ");
             for (Edge edge : edgeSet) {
                 if (edge.getNode1().equals(node)) {
                     formattedNetwork.append(edge.getNode2());
@@ -72,10 +72,6 @@ public class Network {
             formattedNetwork.append("\n");
         }
         return formattedNetwork.toString();
-    }
-
-    public void printNetwork() {
-        System.out.println(formatNetwork());
     }
 
 }

@@ -1,4 +1,7 @@
-package application;
+package AI;
+
+import application.Edge;
+import application.State;
 
 public class MinMax {
 

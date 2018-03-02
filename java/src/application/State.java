@@ -10,28 +10,8 @@ public class State {
     private String player;
     private Network network;
 
-    public State() {
-        network = new Network();
-
-        network.addNode(1);
-        network.addNode(2);
-        network.addNode(3);
-        network.addNode(4);
-        network.addNode(5);
-        network.addNode(6);
-
-        network.addEdge(1, 2);
-        network.addEdge(1, 5);
-        network.addEdge(2, 3);
-        network.addEdge(2, 5);
-        network.addEdge(3, 4);
-        network.addEdge(4, 5);
-        network.addEdge(4, 6);
-
-        /* Infect the machine (1) */
-        network.getNode(1).infect();
-
-        network.printNetwork();
+    public State(Network network) {
+        this.network = network;
     }
 
     /**
