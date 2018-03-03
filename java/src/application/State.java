@@ -1,7 +1,6 @@
 package application;
 
-import java.util.HashSet;
-import java.util.TreeSet;
+import java.util.*;
 
 public class State {
 
@@ -10,14 +9,20 @@ public class State {
     private String player;
     private Network network;
 
+    /**
+     * Constructs a state according to a network.
+     *
+     * @param network A network
+     */
     public State(Network network) {
         this.network = network;
+        player = "defender";
     }
 
     /**
-     * Returns the number of safe edges.
+     * Returns the number of safe edges in this network.
      *
-     * @return The number of safe edges
+     * @return The number of safe edges in this network
      */
     public int getValue() {
         int numberOfSafeEdges = 0;
@@ -36,8 +41,8 @@ public class State {
      *
      * @return The set of infectable machines
      */
-    public TreeSet<Integer> getAttacks() {
-        TreeSet<Integer> infectableMachines = new TreeSet<>();
+    public HashSet<Integer> getAttacks() {
+        HashSet<Integer> infectableMachines = new HashSet<>();
         for (Node machine : network.getNodeSet()) {
             if (machine.isInfected()) {
                 for (Node neighbour : network.getNeighbourNodes(machine)) {
@@ -54,46 +59,77 @@ public class State {
         network.getNode(machine).infect();
     }
 
-    public static HashSet<String> getPowerset(int a[], int n, HashSet<String> ps) {
-        if (n < 0) {
-            return null;
+    /**
+     * Returns the power set of a given set.
+     *
+     * @param set The given set
+     * @param <T> The type of the items in the set
+     * @return The power set of the given set
+     */
+    public static <T> HashSet<HashSet<T>> powerSet(Collection<T> set) {
+        HashSet<HashSet<T>> powerSet = new HashSet<>();
+        powerSet.add(new HashSet<>()); // add the empty set
+
+        /* for every item in the original set */
+        for (T item : set) {
+            HashSet<HashSet<T>> newPowerSet = new HashSet<>();
+            for (HashSet<T> subset : powerSet) {
+                /* copy all of the current power set's subsets */
+                newPowerSet.add(subset);
+
+                /* plus the subsets appended with the current item */
+                HashSet<T> newSubset = new HashSet<>(subset);
+                newSubset.add(item);
+                newPowerSet.add(newSubset);
+            }
+
+            /* powerset is now powerset of set.subList(0, set.indexOf(item) + 1) */
+            powerSet = newPowerSet;
         }
-        if (n == 0) {
-            if (ps == null)
-                ps = new HashSet<>();
-            ps.add(" ");
-            return ps;
-        }
-        ps = getPowerset(a, n - 1, ps);
-        HashSet<String> tmp = new HashSet<>();
-        for (String s : ps) {
-            if (s.equals(" "))
-                tmp.add("" + a[n - 1]);
-            else
-                tmp.add(s + a[n - 1]);
-        }
-        ps.addAll(tmp);
-        return ps;
+        return powerSet;
     }
 
-    public TreeSet<Edge> getDefenses() {
-        TreeSet<Edge> infectableEdges = new TreeSet<>();
+    public HashSet<HashSet<Edge>> getDefenses() {
+        HashSet<Edge> infectableEdges = new HashSet<>();
         for (Edge edge : network.getEdgeSet()) {
             if (edge.isInfectable()) {
                 infectableEdges.add(edge);
             }
         }
-        return infectableEdges;
+        return powerSet(infectableEdges);
     }
 
-    public void playDefense(Edge edge) {
-        network.removeEdge(edge);
+    public void playDefense(HashSet<Edge> edgeSet) {
+        for (Edge edge : edgeSet) {
+            network.removeEdge(edge);
+        }
     }
 
+    /**
+     * Returns {@code true} if the state is finished (no more attacks).
+     *
+     * @return {@code true} if the state is finished; {@code false} otherwise
+     */
     public boolean isFinished() {
         return getAttacks().isEmpty();
     }
 
+    /**
+     * Changes the player.
+     */
+    public void changePlayer() {
+        if (player.equals("defender")) {
+            player = "attacker";
+        } else {
+            player = "defender";
+        }
+    }
+
+    /**
+     * Returns the current player.
+     *
+     * @return The current player
+     */
     public String getPlayer() {
         return player;
     }

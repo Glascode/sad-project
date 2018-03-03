@@ -59,14 +59,14 @@ public class Network {
     public String formatNetwork() {
         StringBuilder formattedNetwork = new StringBuilder();
         for (Node node : nodeSet) {
-            formattedNetwork.append(node.getRepresentation() + " => ");
+            formattedNetwork.append(node.getRepresentation() + " =>");
             for (Edge edge : edgeSet) {
                 if (edge.getNode1().equals(node)) {
-                    formattedNetwork.append(edge.getNode2());
-                    formattedNetwork.append(", ");
+                    formattedNetwork.append(" " + edge.getNode2());
+                    formattedNetwork.append(",");
                 } else if (edge.getNode2().equals(node)) {
-                    formattedNetwork.append(edge.getNode1());
-                    formattedNetwork.append(", ");
+                    formattedNetwork.append(" " + edge.getNode1());
+                    formattedNetwork.append(",");
                 }
             }
             formattedNetwork.append("\n");

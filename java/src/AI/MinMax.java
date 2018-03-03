@@ -3,9 +3,17 @@ package AI;
 import application.Edge;
 import application.State;
 
+import java.util.HashSet;
+
 public class MinMax {
 
-    public double minMax(State state, int depth) {
+    private State state;
+
+    public MinMax(State state) {
+        this.state = state;
+    }
+
+    public double minMax(int depth) {
         //ArrayList result = new ArrayList();
         double result;
         if (depth == 0 || state.isFinished()) {
@@ -16,10 +24,10 @@ public class MinMax {
         }
         if (state.getPlayer().equals("defender")) {
             double max = Double.NEGATIVE_INFINITY;
-            Edge move;
-            for (Edge move2 : state.getDefenses()) {
+            HashSet<Edge> move;
+            for (HashSet<Edge> move2 : state.getDefenses()) {
                 state.playDefense(move2);
-                double value = minMax(state, depth - 1);//.get(0);
+                double value = minMax(depth - 1);
                 if (value > max) {
                     max = value;
                     move = move2;
@@ -33,7 +41,7 @@ public class MinMax {
             int move;
             for (int move2 : state.getAttacks()) {
                 state.playAttack(move2);
-                double value = minMax(state, depth - 1);//.get(0);
+                double value = minMax(depth - 1);
                 if (value < min) {
                     min = value;
                     move = move2;
