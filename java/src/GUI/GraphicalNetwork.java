@@ -6,6 +6,8 @@ import application.Node;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 
+import java.util.HashSet;
+
 public class GraphicalNetwork {
 
     private Network network;
@@ -35,6 +37,21 @@ public class GraphicalNetwork {
 
         /* Style sheet */
         graph.addAttribute("ui.stylesheet", "url('src/application/style.css')");
+
+        /* Rendering quality */
+        graph.addAttribute("ui.quality");
+        graph.addAttribute("ui.antialias");
+    }
+
+    /**
+     * Plays the defense in removing edges in the edge set.
+     *
+     * @param edgeSet The edge set of the edges to be removed
+     */
+    public void playDefense(HashSet<Edge> edgeSet) {
+        for (Edge edge : edgeSet) {
+            graph.removeEdge(edge.getName());
+        }
     }
 
     public void updateGraph() {

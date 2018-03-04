@@ -7,3 +7,11 @@ bin/
 
 # IDE files
 .idea
+
+# TeX files
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
+

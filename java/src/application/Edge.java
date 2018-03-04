@@ -50,7 +50,7 @@ public class Edge {
      * @return The name of this edge.
      */
     public String getName() {
-        return node1 + "-" + node2;
+        return node1.getName() + "-" + node2.getName();
     }
 
     /**
@@ -114,8 +114,10 @@ public class Edge {
         Edge edge = (Edge) obj;
 
         /* Compare the data members and return accordingly */
-        return (edge.getNode1().getId() == this.getNode1().getId())
-                && (edge.getNode2().getId() == this.getNode2().getId());
+        return (((edge.getNode1().getId() == this.getNode1().getId())
+                && (edge.getNode2().getId() == this.getNode2().getId()))
+                || ((edge.getNode1().getId() == this.getNode2().getId())
+                && (edge.getNode2().getId() == this.getNode1().getId())));
     }
 
     /**
@@ -136,6 +138,6 @@ public class Edge {
      * @return The representation of this edge.
      */
     public String toString() {
-        return "[" + node1 + "--" + node2 + "]";
+        return "(" + node1 + "-" + node2 + ")";
     }
 }

@@ -4,9 +4,9 @@ graph {
 
 node {
     fill-color: #6eaba6, white;
-    fill-mode: dyn-plain;
-    /*shadow-color: white, #9ad6ee;*/
     /*shadow-mode: gradient-radial;*/
+    /*shadow-width: 3px;*/
+    /*shadow-color: #9ad6ee, #1E232B;*/
     /*shadow-offset: 0px;*/
     text-alignment: under;
     text-offset: 0px, 4px;
