@@ -1,4 +1,4 @@
-package IO;
+package io;
 
 import application.Edge;
 import application.Node;
@@ -16,7 +16,7 @@ public class Input {
      * @param input The input to be parsed
      * @return {@code true} if the input is conform; {@code false} otherwise
      */
-    public boolean isConformInteger(String input, String errorMessage) {
+    public boolean isConformAttack(String input, String errorMessage) {
         int value;
         try {
             value = Integer.valueOf(input);
@@ -28,6 +28,37 @@ public class Input {
             o.printError(errorMessage);
             return false;
         }
+        return true;
+    }
+
+    /**
+     * Returns {@code true} if the input is a correct attack value.
+     *
+     * @param input The attack to be parsed
+     * @return {@code true} if the attack is conform; {@code false} otherwise
+     */
+    public boolean isConformAttack(String input, HashSet<Integer> attacks) {
+        int value;
+        try {
+            value = Integer.valueOf(input);
+        } catch (NumberFormatException e) {
+            o.printError("Illegal value. A machine must be a positive integer!");
+            return false;
+        }
+        if (value <= 0) {
+            o.printError("Illegal value. A machine must be a positive integer!");
+            return false;
+        }
+
+        /* The value is conform here */
+        if (!attacks.contains(value)) {
+            o.printError("Cannot attack this machine!");
+            o.printInfo("Try with one of the following: " + attacks);
+            return false;
+        }
+
+        o.printInfo(attacks.toString());
+
         return true;
     }
 
@@ -47,11 +78,9 @@ public class Input {
      *
      * @return The conform issued attack
      */
-    public int askAttack() {
+    public int askAttack(HashSet<Integer> attacks) {
         String move = getAttack();
-        String errorMessage = "Illegal value. A machine must be a "
-                + "positive integer!";
-        while (!isConformInteger(move, errorMessage)) {
+        while (!isConformAttack(move, attacks)) {
             move = getAttack();
         }
         return Integer.valueOf(move);
@@ -64,31 +93,32 @@ public class Input {
      * @return {@code true} if the move is conform; {@code false} otherwise
      */
     private boolean isConformDefense(String move, HashSet<Edge> edgeSet) {
-        if ((!move.contains(",") && move.length() > 3) || move.length() < 3) {
-            o.printError("Unaccepted command. An defense must be for instance "
+        if ((!move.contains(",") && move.length() > 5) || move.length() < 3) {
+            o.printError("Unaccepted command. A defense must be for instance "
                     + "'1-2,1-3'.");
             return false;
         }
-        String[] elements = move.split(",");
-        for (String element : elements) {
-            if (element.length() != 3) {
+        String[] elements = move.split(","); // i.e. [12-5, 12-6]
+        for (String element : elements) { // i.e 12-5
+            String[] nodes = element.split("-"); // i.e. [12, 5]
+            if (nodes.length > 2) {
                 o.printError("Unaccepted command. An edge must be for instance "
                         + "'1-2'.");
                 return false;
             }
 
-            /* Element length is 3 here */
-            if (!Character.isDigit(element.charAt(0))
-                    || (element.charAt(1) != '-')
-                    || !Character.isDigit(element.charAt(2))) {
-                o.printError("Illegal characters. An edge must be for instance "
+            /* Nodes length is 2 here */
+            int node1, node2;
+            try {
+                node1 = Integer.valueOf(nodes[0]); // i.e. 12
+                node2 = Integer.valueOf(nodes[1]); // i.e. 5
+            } catch (NumberFormatException e) {
+                o.printError("Unaccepted command. An edge must be for instance "
                         + "'1-2'.");
                 return false;
             }
 
             /* Element is correct here */
-            int node1 = Character.getNumericValue(element.charAt(0));
-            int node2 = Character.getNumericValue(element.charAt(2));
             if (!edgeSet.contains(new Edge(new Node(node1), new Node(node2)))) {
                 o.printError("Edge " + element + " not found.");
                 return false;
@@ -118,8 +148,9 @@ public class Input {
         HashSet<Edge> formattedDefense = new HashSet<>();
         String[] moves = move.split(",");
         for (String e : moves) {
-            int node1 = Character.getNumericValue(e.charAt(0));
-            int node2 = Character.getNumericValue(e.charAt(2));
+            String[] nodes = e.split("-");
+            int node1 = Integer.valueOf(nodes[0]);
+            int node2 = Integer.valueOf(nodes[1]);
             if (node1 > node2) {
 
                 /* Swap the nodes */
@@ -179,12 +210,12 @@ public class Input {
                 + "positive integer!";
         if (type.equals("infected")) {
             n = getInfectedMachines();
-            while (!isConformInteger(n, errorMessage)) {
+            while (!isConformAttack(n, errorMessage)) {
                 n = getInfectedMachines();
             }
         } else {
             n = getMachines();
-            while (!isConformInteger(n, errorMessage)) {
+            while (!isConformAttack(n, errorMessage)) {
                 n = getMachines();
             }
         }
@@ -256,7 +287,7 @@ public class Input {
         String d = getDepth(player);
         String errorMessage = "Illegal value. The depth fo reasoning must be a "
                 + "positive integer!";
-        while (!isConformInteger(d, errorMessage)) {
+        while (!isConformAttack(d, errorMessage)) {
             d = getDepth(player);
         }
         return Integer.valueOf(d);
@@ -287,9 +318,14 @@ public class Input {
         return Boolean.valueOf(alphaBeta);
     }
 
+    /**
+     * Asks the user to enter any character.
+     *
+     * @return The user input
+     */
     public String getQuit() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Press any key to quit > ");
+        System.out.print("Enter any character to quit > ");
         return input.nextLine();
     }
 

@@ -1,4 +1,4 @@
-package AI;
+package ai;
 
 import application.Edge;
 import application.State;

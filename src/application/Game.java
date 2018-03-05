@@ -1,9 +1,7 @@
 package application;
 
-import AI.MinMax;
-import util.Tuple;
-import GUI.GraphicalNetwork;
-import IO.*;
+import gui.GraphicalNetwork;
+import io.*;
 
 import java.util.HashSet;
 
@@ -16,7 +14,7 @@ public class Game {
 
     private Input i = new Input();
     private Output o = new Output();
-    private GraphicalNetwork gui;
+    private GraphicalNetwork gNet;
 
     /**
      * Constructs a Game with m machines, a number of infected machines, the
@@ -37,7 +35,7 @@ public class Game {
         network.generateNetwork();
 
         state = new State(network);
-        gui = new GraphicalNetwork(network);
+        gNet = new GraphicalNetwork(network);
 
         this.aDepth = aDepth;
         this.dDepth = dDepth;
@@ -74,7 +72,7 @@ public class Game {
      */
     public void playDefense(HashSet<Edge> edgeSet) {
         state.playDefense(edgeSet);
-        gui.playDefense(edgeSet);
+        gNet.playDefense(edgeSet);
     }
 
     /**
@@ -82,24 +80,24 @@ public class Game {
      */
     public void run() {
         //inMax minMax = new MinMax((State) state.clone());
-        gui = new GraphicalNetwork(network);
-        gui.display();
+        gNet = new GraphicalNetwork(network);
+        gNet.display();
         o.printNetwork(network);
 
         int att;
         HashSet<Edge> def;
         while (!state.isFinished()) {
-            att = i.askAttack();
+            att = i.askAttack(state.getAttacks());
             //att = (int) minMax.minMax((State) state.clone(), aDepth).get1();
             state.playAttack(att);
-            gui.updateGraph();
+            gNet.updateGraph();
             o.printNetwork(network);
             state.changePlayer();
             sleep();
             def = i.askDefense(network.getEdgeSet());
             //def = (HashSet<Edge>) minMax.minMax((State) state.clone(), dDepth).get1();
             playDefense(def);
-            gui.updateGraph();
+            gNet.updateGraph();
             o.printNetwork(network);
             sleep();
         }

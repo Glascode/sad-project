@@ -1,6 +1,6 @@
 package application;
 
-import IO.*;
+import io.*;
 
 public class Infection {
 
@@ -40,12 +40,12 @@ public class Infection {
         } else if (args.length == 6) {
             String errorMessage = "Illegal value. A machine must be a positive "
                     + "integer!";
-            if (i.isConformInteger(args[0], errorMessage)
-                    && i.isConformInteger(args[1], errorMessage)
+            if (i.isConformAttack(args[0], errorMessage)
+                    && i.isConformAttack(args[1], errorMessage)
                     && i.isConformProbability(args[2])
-                    && i.isConformInteger(args[3], "Illegal value. "
+                    && i.isConformAttack(args[3], "Illegal value. "
                     + "A depth of reasoning must be a positive integer!")
-                    && i.isConformInteger(args[4], "Illegal value. "
+                    && i.isConformAttack(args[4], "Illegal value. "
                     + "A depth of reasoning must be a positive integer!")
                     && (args[5].equals("true") || args[5].equals("false"))) {
 
@@ -57,7 +57,7 @@ public class Infection {
             }
         } else {
             o.printError("Invalid arguments.");
-            o.printUsage("m m_infected p a_depth d_depth alpha_beta\n"
+            o.printInfo("m m_infected p a_depth d_depth alpha_beta\n"
                     + "  m          The number of machines to be created in the network\n"
                     + "  m_infected The number of machines to be infected\n"
                     + "  p          The probability for two machines to be linked\n"

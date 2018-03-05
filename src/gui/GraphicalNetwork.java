@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import application.Edge;
 import application.Network;
@@ -6,8 +6,6 @@ import application.Node;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 
-import javax.swing.text.html.CSS;
-import java.io.InputStreamReader;
 import java.util.HashSet;
 
 public class GraphicalNetwork {
@@ -63,6 +61,9 @@ public class GraphicalNetwork {
         }
     }
 
+    /**
+     * Updates this graph according to the network.
+     */
     public void updateGraph() {
         for (Node node : network.getNodeSet()) {
             graph.getNode(node.getName()).addAttribute("ui.class", node.getType());
@@ -72,6 +73,9 @@ public class GraphicalNetwork {
         }
     }
 
+    /**
+     * Displays this graph.
+     */
     public void display() {
         graph.display();
     }

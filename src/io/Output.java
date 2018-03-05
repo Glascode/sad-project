@@ -1,11 +1,11 @@
-package IO;
+package io;
 
 import application.Network;
 
 public class Output {
 
-    private String ERR_PREFIX = "Error: ";
-    private String USA_PREFIX = "Usage: ";
+    private String ERR_PREFIX = "Error > ";
+    private String INF_PREFIX = "Info > ";
 
     /**
      * Output text colours.
@@ -23,12 +23,12 @@ public class Output {
     }
 
     /**
-     * Formats a usage info string.
+     * Formats an info string.
      *
-     * @param info The usage info string to be formatted.
+     * @param info The info string to be formatted.
      * @return The formatted info
      */
-    private String formatUsage(String info) {
+    private String formatInfo(String info) {
         return ANSI_YELLOW + info + ANSI_RESET;
     }
 
@@ -37,8 +37,8 @@ public class Output {
      *
      * @param info The info string to be printed.
      */
-    public void printUsage(String info) {
-        System.out.println(formatUsage(USA_PREFIX + info));
+    public void printInfo(String info) {
+        System.out.println(formatInfo(INF_PREFIX + info));
     }
 
     /**
