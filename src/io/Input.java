@@ -89,7 +89,8 @@ public class Input {
     /**
      * Returns {@code true} if the defense move is conform.
      *
-     * @param move The move to be parsed
+     * @param move    The move to be parsed
+     * @param edgeSet The set of edges to be verified
      * @return {@code true} if the move is conform; {@code false} otherwise
      */
     private boolean isConformDefense(String move, HashSet<Edge> edgeSet) {
@@ -167,6 +168,7 @@ public class Input {
     /**
      * Asks the user to issue a defense.
      *
+     * @param edgeSet The set of edges of the network
      * @return The conform issued defense
      */
     public HashSet<Edge> askDefense(HashSet<Edge> edgeSet) {
@@ -202,6 +204,7 @@ public class Input {
     /**
      * Asks the user a number of machines or infected machines.
      *
+     * @param type The type of machines to be asked
      * @return The conform issued number of machines
      */
     public int askMachines(String type) {
@@ -270,6 +273,7 @@ public class Input {
     /**
      * Asks a depth of reasoning to the user.
      *
+     * @param player The player
      * @return The raw user input
      */
     private String getDepth(String player) {
