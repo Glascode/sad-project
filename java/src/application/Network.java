@@ -98,26 +98,12 @@ public class Network {
     }
 
     /**
-     * Reads in n, p, and k and returns (n choose k) * p^k * (1-p)^(n-k).
-     *
-     * @param n The total number of edges
-     * @param p The probability for an edge to exist
-     * @param k The number of edges amongst all edges
-     * @return The probability for n edges to exist
-     */
-    public double binomial(int n, double p, int k) {
-        return (factorial(n) / (factorial(k) * factorial(n - k)))
-                * (Math.pow(p, k))
-                * Math.pow(1 - p, n - k);
-    }
-
-    /**
      * Returns the factorial of the integer n
      *
      * @param n The integer
      * @return The factorial of the integer n
      */
-    public static long factorial(int n) {
+    private static long factorial(int n) {
         if (n > 1) {
             return n * factorial(n - 1);
         }
@@ -129,7 +115,7 @@ public class Network {
      *
      * @param node The node to be added
      */
-    public void addNode(int node) {
+    private void addNode(int node) {
         nodeSet.add(new Node(node));
     }
 
@@ -156,7 +142,7 @@ public class Network {
      * @param node1 The first node of the edge to be added
      * @param node2 The second node of the edge to be added
      */
-    public void addEdge(int node1, int node2) {
+    private void addEdge(int node1, int node2) {
         edgeSet.add(new Edge(getNode(node1), getNode(node2)));
     }
 
@@ -210,20 +196,28 @@ public class Network {
      *
      * @return The formatted network
      */
-    public String formatNetwork() {
+    @Override
+    public String toString() {
         StringBuilder formattedNetwork = new StringBuilder();
         for (Node node : nodeSet) {
-            formattedNetwork.append(node.getRepresentation() + " =>");
+            int counter = 0;
+            formattedNetwork.append(node.getRepresentation() + " => [");
             for (Edge edge : edgeSet) {
                 if (edge.getNode1().equals(node)) {
-                    formattedNetwork.append(" " + edge.getNode2());
-                    formattedNetwork.append(",");
+                    if (counter >= 1 && counter < edgeSet.size()) {
+                        formattedNetwork.append(", ");
+                    }
+                    formattedNetwork.append(edge.getNode2());
+                    counter++;
                 } else if (edge.getNode2().equals(node)) {
-                    formattedNetwork.append(" " + edge.getNode1());
-                    formattedNetwork.append(",");
+                    if (counter >= 1 && counter < edgeSet.size()) {
+                        formattedNetwork.append(", ");
+                    }
+                    formattedNetwork.append(edge.getNode1());
+                    counter++;
                 }
             }
-            formattedNetwork.append("\n");
+            formattedNetwork.append("]\n");
         }
         return formattedNetwork.toString();
     }

@@ -1,29 +1,29 @@
 package util;
 
-public class Tuple<Double, Y> {
+public class Tuple<X, Y> {
 
-    private double arg0;
+    private X arg0;
     private Y arg1;
 
-    public Tuple(double arg0, Y arg1) {
+    public Tuple(X arg0, Y arg1) {
         this.arg0 = arg0;
         this.arg1 = arg1;
     }
 
     public Tuple() {
-        this(0, null);
+        this(null, null);
     }
 
-    public void setTuple(double arg0, Y arg1) {
+    public void setTuple(X arg0, Y arg1) {
         this.arg0 = arg0;
         this.arg1 = arg1;
     }
 
-    public void set0(double arg) {
+    public void set0(X arg) {
         this.arg0 = arg;
     }
 
-    public double get0() {
+    public X get0() {
         return arg0;
     }
 

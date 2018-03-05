@@ -6,6 +6,8 @@ import application.Node;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 
+import javax.swing.text.html.CSS;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 
 public class GraphicalNetwork {
@@ -36,7 +38,14 @@ public class GraphicalNetwork {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         /* Style sheet */
-        graph.addAttribute("ui.stylesheet", "url('src/application/style.css')");
+        //graph.addAttribute("ui.stylesheet", "url('/resources/style.css')");
+        String styleSheet = "graph { fill-color: #1E232B; } "
+                + "node { fill-color: #6eaba6, white; text-alignment: under; "
+                + "text-offset: 0px, 4px; text-color: white; text-size: 20; } "
+                + "node.infected { fill-color: #9d0000; }"
+                + "edge { fill-color: #52807c; } "
+                + "edge.infected { fill-color: #740000; } ";
+        graph.addAttribute("ui.stylesheet", styleSheet);
 
         /* Rendering quality */
         graph.addAttribute("ui.quality");

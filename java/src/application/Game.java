@@ -25,29 +25,15 @@ public class Game {
      * alpha-beta pruning.
      *
      * @param m                Number of machines to be created in the network
-     * @param nInfected        Number of machines to be infected
+     * @param mInfected        Number of machines to be infected
      * @param p                The probability for two machines to be linked
-     * @param aDepth           The attacker depth reasoning
-     * @param dDepth           The defender depth reasoning
+     * @param aDepth           The attacker depth of reasoning
+     * @param dDepth           The defender depth of reasoning
      * @param alphaBetaPruning Usage or not of an alpha-beta pruning
      */
-    public Game(int m, int nInfected, double p, int aDepth, int dDepth,
+    public Game(int m, int mInfected, double p, int aDepth, int dDepth,
                 boolean alphaBetaPruning) {
-        /* Handle exceptions */
-        if (m == 0) {
-            o.printError("Cannot define 0 machine!");
-            System.exit(1);
-        }
-        if (p < 0 || p > 1) {
-            o.printError("Probability p must be a decimal in ]0, 1[!");
-            System.exit(1);
-        }
-        if (nInfected >= m) {
-            o.printError("Cannot infect all machines!");
-            System.exit(1);
-        }
-
-        network = new Network(m, nInfected, p);
+        network = new Network(m, mInfected, p);
         network.generateNetwork();
 
         state = new State(network);
@@ -110,7 +96,7 @@ public class Game {
             o.printNetwork(network);
             state.changePlayer();
             sleep();
-            def = i.askDefense();
+            def = i.askDefense(network.getEdgeSet());
             //def = (HashSet<Edge>) minMax.minMax((State) state.clone(), dDepth).get1();
             playDefense(def);
             gui.updateGraph();
@@ -119,6 +105,8 @@ public class Game {
         }
 
         System.out.println("The game is over!");
+        i.getQuit();
+        System.exit(0);
     }
 
 }

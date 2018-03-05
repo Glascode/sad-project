@@ -4,8 +4,6 @@ import java.util.*;
 
 public class State implements Cloneable {
 
-    private int numberOfMachines;
-    private int numberOfInfectedMachines;
     private String player;
     private Network network;
 
@@ -126,7 +124,7 @@ public class State implements Cloneable {
      * @param <T> The type of the items in the set
      * @return The power set of the given set
      */
-    public static <T> HashSet<HashSet<T>> powerSet(Collection<T> set) {
+    private static <T> HashSet<HashSet<T>> powerSet(Collection<T> set) {
         HashSet<HashSet<T>> powerSet = new HashSet<>();
         powerSet.add(new HashSet<>()); // add the empty set
 
@@ -160,7 +158,7 @@ public class State implements Cloneable {
 
             /* Instance to be returned */
             obj = super.clone();
-        } catch(CloneNotSupportedException cnse) {
+        } catch (CloneNotSupportedException cnse) {
 
             /* In case the Cloneable interface is not implemented */
             cnse.printStackTrace(System.err);
