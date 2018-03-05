@@ -82,9 +82,15 @@
 
 Notre graphe (ou réseau) est constitué de deux ensembles : l'un étant composé de n\oe uds, et l'autre d'arêtes (paires de 2 sommets exactement). Chaque n\oe ud possède un état parmi deux : {\it infecté} ou {\it sain}. Chaque arête possède un état parmi trois : {\it infectée}, {\it infectable} ou {\it saine}.
 
+La génération aléatoire binomiale du graphe n'a pas pu être gérée rigoureusement, mais un système de génération aléatoire des arêtes du graphe dépendant d'une probabilité $p$ a quand même pu être utilisé.
+
 \section{Représentation graphique}
+
+Pour représenter graphiquement le graphe, nous avons utilisé la bibliothèque \href{http://graphstream-project.org/}{GraphStream}\footnote{\url{http://graphstream-project.org/}}, dont la représentation du graphe se rapproche de celle que nous avons utilisée. Cela a donc facilité l'intégration des données de notre graphe en l'interface graphique avec GraphStream.
 
 
 \chapter{Résultats d'expérimentations}
+
+Aucune expérimentation n'a pu être effectuée car, malgré nos efforts et notre temps passé dans la recherche de solutions, l'algorithme MinMax n'a pas pu être correctement implémenté dans les temps. Cependant, nous avons volontairement laissé un algorithme MinMax non fonctionnel et non achevé pour laisser une trace de ce que nous avons pu essayer d'entreprendre.
 
 \end{document}
